@@ -1,0 +1,33 @@
+#WORK FLOW NAME
+name: Python CI  
+
+#TRIGGER THE workflow on any push to the main branch or pull request
+on: #events that trigger the workflow - push,pull,merge
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    test: #job name
+        runs-on: ubuntu-latest #container to run a application and test it , we also have window and mac os containers
+
+        steps:
+            - name: Checkout code  #step name
+              uses: actions/checkout@v2  #action to checkout the code from the repository
+
+            - name: Set up Python 3.8  #step name
+              uses: actions/setup-python@v2  #action to setup python environment
+              with:
+                  python-version: 3.8  #specify the python version
+
+            - name: Install dependencies  #step name
+              run: |  #run command to install dependencies
+                  python -m pip install --upgrade pip
+                  pip install -r Requirements.txt
+
+            - name: Run tests  #step name
+              run: |  #run command to run the test cases
+                  pytest
