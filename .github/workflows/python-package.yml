@@ -32,3 +32,13 @@ jobs:
               run: |
                 export PYTHONPATH=$PYTHONPATH:$(pwd)
                 pytest
+            
+            - name: Debug import
+              run: |
+                python - <<EOF
+                import src.math_operation
+                print(dir(src.math_operation))
+                EOF
+
+
+               
