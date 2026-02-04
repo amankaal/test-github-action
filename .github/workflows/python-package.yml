@@ -28,6 +28,21 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r Requirements.txt
 
+            - name: Clean caches
+              run: |
+                    find . -type d -name "__pycache__" -exec rm -rf {} +
+                    rm -rf .pytest_cache
+
+
+            - name: Debug module import
+              run: |
+                python - <<EOF
+                import src.math_operation
+                print("Module loaded from:", src.math_operation.__file__)
+                print("Attributes:", dir(src.math_operation))
+                EOF
+
+
             - name: Run tests  #step name
               run: |
                 export PYTHONPATH=$PYTHONPATH:$(pwd)
